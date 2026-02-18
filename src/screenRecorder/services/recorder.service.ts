@@ -6,30 +6,46 @@ interface domRecord{
   snap: any,
   timestamp: number
 } 
-const TWO_MINUTES = 30*1000;
-const FIVE_MINUTES = 5*60*1000;
+const ONE_MINUTE = 1*60*1000;
+const THREE_MINUTES = 3*60*1000;
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecorderService {
   chunks:eventWithTime[] = [];
-  latestRecords:eventWithTime[] = [];
+  dummay:any[]=[];
   constructor() {}
 
    getChunks(){
-    return this.latestRecords;
+    this.dummay = [...this.chunks];
+    const now = Date.now();
+
+    const filteredEvents = this.dummay.filter(event => {
+      return (now - event.timestamp) <= ONE_MINUTE;
+    });
+    const firstValidIndex = filteredEvents.findIndex(event => event.type === 4);
+    if(firstValidIndex == -1){
+      return [];
+    }
+    if(firstValidIndex == 0){
+      return filteredEvents;
+    }else{
+      return filteredEvents.slice(firstValidIndex-1);
+    }
    }
 
   startRecording(){
     record({
-      checkoutEveryNms : 2000,
+      checkoutEveryNms : 1000,
       emit:(event, isCheckout)=>{
         if(isCheckout){
           this.chunks.push(event);
-          this.latestRecords = this.chunks;
+          const now = Date.now();
+          this.chunks = this.chunks.filter(event => {
+            return (now - event.timestamp) <= THREE_MINUTES;
+          });
         }
-        console.log(event);
         this.chunks.push(event);
       },
       recordCanvas:true,
