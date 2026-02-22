@@ -1,0 +1,15 @@
+<button (click)="startRecording()">start</button>
+<button (click)="playRecordings()">play</button>
+<div id = "replayer"></div>
+
+<div class="player-container" #playerContainer></div>
+    
+    <!-- Custom Console Template -->
+    <div class="custom-console">
+      <h3>Session Logs</h3>
+      <ul>
+        <li *ngFor="let log of playbackLogs" [ngClass]="log.level">
+          <strong>[{{log?.level}}]</strong> {{log?.message?.payload[0]}}
+        </li>
+      </ul>
+    </div>

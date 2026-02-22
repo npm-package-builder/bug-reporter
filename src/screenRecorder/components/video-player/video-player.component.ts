@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-
 import rrwebPlayer from 'rrweb-player';
 import { RecorderService } from '../../services/recorder.service';
 @Component({
@@ -17,8 +16,11 @@ export class VideoPlayerComponent {
   startRecording(){
     this.recodService.startRecording();
   }
-  getRecordings() {
-    const chunks: any = this.recodService.getChunks();
+  getRecordings(){
+    return this.recodService.getChunks();
+  }
+  playRecording() {
+    const chunks: any = this.getRecordings();
     if (this.player) {
       this.player.pause();
       const playerContainer = document.getElementById('replayer');
@@ -32,5 +34,4 @@ export class VideoPlayerComponent {
     })
     this.player.play();
   }
-
 }

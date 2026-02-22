@@ -2,10 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { record } from 'rrweb';
 import { eventWithTime } from '@rrweb/types';
-interface domRecord{
-  snap: any,
-  timestamp: number
-} 
 const ONE_MINUTE = 1*60*1000;
 const THREE_MINUTES = 3*60*1000;
 
@@ -14,14 +10,14 @@ const THREE_MINUTES = 3*60*1000;
 })
 export class RecorderService {
   chunks:eventWithTime[] = [];
-  dummay:any[]=[];
+  currentSnapShot:eventWithTime[]=[];
   constructor() {}
 
    getChunks(){
-    this.dummay = [...this.chunks];
+    this.currentSnapShot = [...this.chunks];
     const now = Date.now();
 
-    const filteredEvents = this.dummay.filter(event => {
+    const filteredEvents = this.currentSnapShot.filter(event => {
       return (now - event.timestamp) <= ONE_MINUTE;
     });
     const firstValidIndex = filteredEvents.findIndex(event => event.type === 4);
@@ -46,6 +42,7 @@ export class RecorderService {
             return (now - event.timestamp) <= THREE_MINUTES;
           });
         }
+        console.log(event)
         this.chunks.push(event);
       },
       recordCanvas:true,
