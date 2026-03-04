@@ -1,9 +1,7 @@
 <button (click)="startRecording()">start</button>
-<button (click)="playRecordings()">play</button>
-<div id = "replayer"></div>
+<button (click)="playRecordingsUsingRrWeb()">play</button>
+  <div id = "replayer"></div>
 
-<div class="player-container" #playerContainer></div>
-    
     <!-- Custom Console Template -->
     <div class="custom-console">
       <h3>Session Logs</h3>
@@ -12,4 +10,4 @@
           <strong>[{{log?.level}}]</strong> {{log?.message?.payload[0]}}
         </li>
       </ul>
-    </div>
+</div>

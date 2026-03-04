@@ -42,7 +42,6 @@ export class RecorderService {
             return (now - event.timestamp) <= THREE_MINUTES;
           });
         }
-        console.log(event)
         this.chunks.push(event);
       },
       recordCanvas:true,

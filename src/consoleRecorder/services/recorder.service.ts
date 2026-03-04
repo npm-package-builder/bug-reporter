@@ -43,19 +43,7 @@ export class RecorderService {
             return (now - event.timestamp) <= THREE_MINUTES;
           });
         }
-        // console.log(event);
         this.chunks.push(event);
-        // const originalLog = (console.log as any)['__rrweb_original__'] || console.log;
-        // const originalWarn = (console.warn as any)['__rrweb_original__'] || console.warn;
-        // const originalError = (console.error as any)['__rrweb_original__'] || console.error;
-        // const originalInfo = (console.info as any)['__rrweb_original__'] || console.info;
-
-        // // These will NOT trigger a new rrweb event (No Infinite Loop)
-        // originalLog('Normal info');
-        // originalWarn('This is a safe warning');
-        // originalError('This is a safe error');
-        // originalInfo('This is a safe info');
-        
       },
       plugins:[
         getRecordConsolePlugin({
@@ -68,6 +56,13 @@ export class RecorderService {
           }
         })
       ],
+      recordCanvas:true,
+      recordCrossOriginIframes:false,
+      maskAllInputs:false,
+      maskInputOptions:{
+        password: true,
+        color: false
+      }
 
     })
   }
